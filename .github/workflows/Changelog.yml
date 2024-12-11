@@ -1,7 +1,7 @@
 name: Automatic Changelog from Releases list
-on:
-  release:
-    types: [created, published]
+on: push
+  # release:
+  #   types: [created, published]
 jobs:
   changelog:
     runs-on: ubuntu-latest
@@ -15,7 +15,8 @@ jobs:
          git config --global user.name 'PyMoBot'
          git config --global user.email 'bot@pymodaq.cnrs.fr'
          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-         echo "Switching"
+         echo "Switching to $CURRENTTAG"
+         echo `git branch --contains tags/$CURRENTTAG |head -n 1`
          git switch `git branch --contains tags/$CURRENTTAG |head -n 1`
          echo -e "# Changelog\n" > Changelog.md
          echo "Generating list"
