@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+       CURRENTTAG: ${{ github.head_ref || github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -15,7 +15,7 @@ jobs:
          git config --global user.name 'PyMoBot'
          git config --global user.email 'bot@pymodaq.cnrs.fr'
          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-         git switch $BRANCH_NAME
+         git switch `git branch --contains tags/$CURRENTTAG |head -n 1`
          echo -e "# Changelog\n" > Changelog.md
          gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
          git add Changelog.md
