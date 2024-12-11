@@ -19,3 +19,4 @@ jobs:
          gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
          git add Changelog.md
          git commit -m "auto generated Changelog"
+         git push
