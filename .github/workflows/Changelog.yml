@@ -13,7 +13,7 @@ jobs:
       - run: |
          git config --global user.name 'PyMoBot'
          git config --global user.email 'bot@pymodaq.cnrs.fr'
-         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }
+         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
          ls
          echo -e "# Changelog\n" > Changelog.md
          gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
