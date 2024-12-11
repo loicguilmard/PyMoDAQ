@@ -1,18 +1,13 @@
 name: Automatic Changelog from Releases list
-on: [push, pull_request, workflow_dispatch]
+on:
+  release:
+    types: [created, published]
 jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
-      - name: Releases to Changelog
-  # You may pin to the exact commit or the version.
-  # uses: LSVH/gha-releases-to-changelog@88d77ba5c56f0068583aa567a4a98d087ef2d022
-        uses: LSVH/gha-releases-to-changelog@v1
-        with:
-          # The GITHUB_TOKEN secret
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: Changelog.md
-          # # Configure the title of the release
-          # title-template: # optional, default is %%TITLE%%
-          # # Configure the description of the release
-          # description-template: # optional, default is %%DESCRIPTION%%
+      - run: |
+         echo -e "# Changelog\n" > Changelog.md
+         gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
+         git add Changelog.md
+         git commit -m "auto generated Changelog"
