@@ -11,6 +11,7 @@ jobs:
         with:
           # The GITHUB_TOKEN secret
           token: ${{ secrets.GITHUB_TOKEN }}
+          path: Changelog.md
           # # Configure the title of the release
           # title-template: # optional, default is %%TITLE%%
           # # Configure the description of the release
