@@ -17,7 +17,7 @@ jobs:
          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
          echo "Switching to $CURRENTTAG"
          echo `git branch --contains tags/$CURRENTTAG |head -n 1`
-         git switch `git branch --contains tags/$CURRENTTAG |head -n 1` | git switch $CURRENTTAG
+         git switch `git branch --contains tags/$CURRENTTAG |head -n 1` || git switch $CURRENTTAG
          echo -e "# Changelog\n" > Changelog.md
          echo "Generating list"
          gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
