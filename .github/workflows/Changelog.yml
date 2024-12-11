@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-           token: ${{ secrets.CI_TOKEN }}
       - run: |
          git config --global user.name 'PyMoBot'
          git config --global user.email 'bot@pymodaq.cnrs.fr'
