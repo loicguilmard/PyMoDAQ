@@ -9,6 +9,8 @@ jobs:
        GH_TOKEN: ${{ github.token }}
     steps:
       - run: |
+         ls
+         cd PyMoDAQ
          echo -e "# Changelog\n" > Changelog.md
          gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
          git add Changelog.md
