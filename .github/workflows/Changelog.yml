@@ -6,11 +6,17 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     env:
-       GH_TOKEN: ${{ github.token }}
+       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.CI_TOKEN }}
       - run: |
+         git config --global user.name 'PyMoBot'
+         git config --global user.email 'bot@pymodaq.cnrs.fr'
+         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }
          ls
-         cd PyMoDAQ
          echo -e "# Changelog\n" > Changelog.md
          gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
          git add Changelog.md
