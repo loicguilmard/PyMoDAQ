@@ -22,9 +22,9 @@ jobs:
          echo "Generating list"
          gh release list
          echo "direct 4.4.8"
-         gh release view 4.4.8
+         gh release view "4.4.8" || echo "fail release view static"
          echo "without writing"
-         gh release list |cut -b1-6 |while read versiontag; do echo $versiontag; gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'; done
+         gh release list |cut -b1-6 |while read versiontag; do echo "while $versiontag"; gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'; done
          echo "writing"
          gh release list |cut -b1-6 |while read versiontag; do gh release view --json name,url,body "$versiontag" --jq '"# ["+.name+"]"+"("+.url+")",.body' |sed 's/^#/##/g'>> Changelog.md; done
          git add Changelog.md
