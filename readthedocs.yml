@@ -10,9 +10,9 @@ build:
   tools:
     python: "3.11"
   jobs:
-#    post_checkout:
-#      - git branch
-#      - git fetch --prune --unshallow
+    post_checkout:
+      - git branch
+      - git fetch --prune --unshallow
 #      - git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     pre_build:
       - python -m automodule.py
