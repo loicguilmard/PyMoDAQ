@@ -11,6 +11,6 @@ if __name__ == "__main__":
         system(f"sphinx-apidoc -e -o ./docs/src/api/{module} {module_path}/{module}")
 
     with open('./docs/src/api/pymodaq_data/pymodaq_data.h5modules.exporter.rst', 'a') as file:
-        file.write(':exclude-members: H5Exporter\n')
+        file.write('   :exclude-members: H5Exporter\n')
 
     
