@@ -10,6 +10,6 @@ Library Reference
    /api/API_control_modules
    /api/api_extensions
    /api/API_Utility_Modules
-   /api/pymodaq_utils/modules
-   /api/pymodaq_gui/modules
-   /api/pymodaq_data/modules
+   /api/pymodaq_utils/pymodaq_utils
+   /api/pymodaq_gui/pymodaq_gui
+   /api/pymodaq_data/pymodaq_data
