@@ -13,7 +13,7 @@ build:
     post_checkout:
       - git branch
       - git fetch --prune --unshallow
-#      - git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     pre_build:
       - python docs/automodule.py || true
 
